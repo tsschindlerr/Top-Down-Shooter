@@ -27,5 +27,4 @@ public class CameraFollow : MonoBehaviour
         }
 
     }
-    // test
 }
