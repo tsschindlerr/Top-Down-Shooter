@@ -11,6 +11,6 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        
+        //ah ten git
     }
 }
