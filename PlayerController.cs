@@ -4,11 +4,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 
 {
-
+    //player movement
     public float speed;
     public float topBound;
     public float sideBound;
     private Rigidbody playerRb;
+
+    //firing projectiles
+    public GameObject projectilePrefab;
+    public Transform projectileSpawnPoint;
 
     void Start()
     {
@@ -20,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         ConstrainPlayerMove();
+        Fire();
     }
 
     // moves the player mased on WASD/arrow input
@@ -72,5 +77,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player collected Powerup");
         }
     }
+
+    // fire a projectile on click
+    void Fire() 
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Instantiate(projectilePrefab, projectileSpawnPoint.position, projectilePrefab.transform.rotation);
+        }
+        }
 
 }
