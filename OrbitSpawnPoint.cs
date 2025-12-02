@@ -20,7 +20,7 @@ public class OrbitSpawnPoint : MonoBehaviour
     
     void Update()
     {
-        if (!player) return;
+        if (!player) return; //don't do anything if the player is missing
 
         angleY += Input.GetAxis("Mouse X") * orbitingSpeed * Time.deltaTime;
 
