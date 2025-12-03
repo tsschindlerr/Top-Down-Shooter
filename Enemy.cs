@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody enemyRb;
     private GameObject player;
     private Vector3 lookDirection;
-    
+
     void Start()
     {
         //access essential components for enemy movement
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
     }
 
-    
+
     void Update()
     {
         //create a vector to face the player + add speed
@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
         {
             lookDirection = (player.transform.position - transform.position).normalized;
             enemyRb.AddForce(lookDirection * speed);
+            //transform.Translate(lookDirection * speed);
         }
         else
         {
@@ -37,5 +38,15 @@ public class Enemy : MonoBehaviour
         }
 
 
+    }
+
+    private void OnTriggerEnter (Collider other)
+    {
+        if (other.gameObject.CompareTag("Projectile"))
+        {
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+            Debug.Log("Enemy collided with Projectile");
+        }
     }
 }

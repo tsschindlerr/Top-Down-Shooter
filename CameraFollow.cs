@@ -4,7 +4,6 @@ using UnityEngine.UIElements;
 public class CameraFollow : MonoBehaviour
 {
     public GameObject player;
-    public float cameraRotationSpeed;
     private Vector3 offset = new Vector3(-3, 24, 0);
     private Vector3 lastPosition;
 

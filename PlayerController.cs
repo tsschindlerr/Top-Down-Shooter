@@ -1,11 +1,18 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 
 {
     //player movement
     public float speed;
+
+    private float horizontalInput;
+    private float forwardInput;
+    public float turnSpeed;
+    public GameObject player;
+
     public float topBound;
     public float sideBound;
     private Rigidbody playerRb;
@@ -30,10 +37,17 @@ public class PlayerController : MonoBehaviour
     // moves the player mased on WASD/arrow input
     void MovePlayer()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        /*float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         playerRb.AddForce(Vector3.forward * speed * verticalInput);
-        playerRb.AddForce(Vector3.right * speed * horizontalInput);
+        playerRb.AddForce(Vector3.right * speed * horizontalInput);*/
+
+        horizontalInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis("Vertical");
+
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
+
+        transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
     }
 
     //Limits player moevement to given area
@@ -78,13 +92,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // fire a projectile on click
-    void Fire() 
+    //fire a projectile on click
+    void Fire()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(projectilePrefab, projectileSpawnPoint.position, projectilePrefab.transform.rotation);
+            Instantiate(projectilePrefab, projectileSpawnPoint.position, player.transform.rotation);
         }
-        }
+    }
 
 }
