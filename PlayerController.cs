@@ -15,15 +15,19 @@ public class PlayerController : MonoBehaviour
 
     public float topBound;
     public float sideBound;
-    private Rigidbody playerRb;
-
+    
     //firing projectiles
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
 
+    //animation
+    public bool isMoving;
+    private Animator animator;
+
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
+    animator = GameObject.Find("Player Model").GetComponent<Animator>();
+    
     }
 
 
@@ -32,22 +36,30 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         ConstrainPlayerMove();
         Fire();
+        AnimationTrigger();
     }
 
-    // moves the player mased on WASD/arrow input
+    // moves the player based on WASD/arrow input
     void MovePlayer()
     {
-        /*float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        playerRb.AddForce(Vector3.forward * speed * verticalInput);
-        playerRb.AddForce(Vector3.right * speed * horizontalInput);*/
-
+    
         horizontalInput = Input.GetAxis("Horizontal");
         forwardInput = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
+        Vector3 movement = new Vector3(horizontalInput, 0, forwardInput);
 
-        transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+        if (movement.magnitude > 0.01f)
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
+
+            transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
     }
 
     //Limits player moevement to given area
@@ -100,5 +112,19 @@ public class PlayerController : MonoBehaviour
             Instantiate(projectilePrefab, projectileSpawnPoint.position, player.transform.rotation);
         }
     }
+
+    void AnimationTrigger()
+    {
+        if(isMoving)
+        {
+            animator.SetFloat("Speed_f", 1);
+        }
+        else
+        {
+            animator.SetFloat("Speed_f", 0);
+        }
+    }
+    
+
 
 }
