@@ -3,6 +3,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class OrbitSpawnPoint : MonoBehaviour
 {
+    // deprecated script for aiming; kept for possible future use/reference
     public Transform player;
     public float distanceFromPlayer;
     public float orbitingSpeed;
